@@ -10,19 +10,20 @@ All processing is done in Python using OpenCV and custom restoration functions.
 
 ```
 Module2/
-│── app.py
-│── A2.py                    # Hybrid restoration functions
-│── matching_T.py            # Template matching engine
+│── Outputs
 │── requirements.txt
-│
+│── static/
+    ├── dataset/             # Provided test images
+    ├── output_TM/            # Template-matching results
+    ├── results/  # Saved restoration outputs
+    └── test_images/           # The images for part 4. (you can upload your own)
+
 ├── templates/
 │   └── index.html           # Main UI
-│
-└── static/
-    ├── dataset/             # Provided test images
-    ├── uploads/             # User-uploaded images
-    ├── results/  # Saved restoration outputs
-    └── output_TM/           # Template-matching results
+|
+|── app.py
+│── A2.py                    # Hybrid restoration functions
+│── matching_T.py            # Template matching engine
 ```
 
 ## 2. Features
