@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Module 2</title>
+    <style>
+        /* ==================== GLOBAL ==================== */
+        body {
+            font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial;
+            margin: 24px;
+            background: #fafafa;
+            font-size: 18px; /* 🔥 bigger base font */
+        }
+
+        h1 { 
+            font-size: 32px; /* 🔥 bigger title */
+            margin-bottom: 6px; 
+        }
+        h2 { 
+            font-size: 26px; /* 🔥 bigger section titles */ 
+            margin-bottom: 10px;
+        }
+
+        .note {
+            color: #555;
+            margin-bottom: 16px;
+            font-size: 18px; /* 🔥 bigger description */
+        }
+
+        .error {
+            background: #ffe6e6;
+            color: #a00;
+            padding: 12px 16px;
+            font-size: 18px; /* 🔥 larger error text */
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        /* ==================== TABS ==================== */
+        .tabs {
+            margin-bottom: 20px;
+        }
+        .tabs a {
+            display: inline-block;
+            padding: 10px 22px;  /* bigger buttons */
+            border-radius: 999px;
+            border: 2px solid #ccc;
+            background: #fff;
+            margin-right: 8px;
+            text-decoration: none;
+            color: #333;
+            font-size: 20px; /* 🔥 bigger tab text */
+            font-weight: 600;
+        }
+        .tabs a.active {
+            background: #007bff;
+            border-color: #007bff;
+            color: #fff;
+        }
+
+        /* ==================== THUMBNAILS ==================== */
+        .thumb-strip {
+            display: flex;
+            overflow-x: auto;
+            gap: 14px;
+            padding: 14px;
+            background: #fff;
+            border-radius: 14px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+        }
+        .thumb {
+            width: 200px;        /* 🔥 bigger */
+            height: 150px;       /* 🔥 bigger */
+            border-radius: 12px;
+            object-fit: cover;
+            border: 4px solid transparent;
+        }
+        .thumb.selected {
+            border-color: #007bff;
+        }
+
+        /* ==================== SELECTED IMAGE ==================== */
+        .selected-section {
+            background: #fff;
+            padding: 24px; /* bigger padding */
+            border-radius: 14px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.10);
+            margin-bottom: 26px;
+        }
+        .selected-img {
+            width: 100%;
+            border-radius: 14px;
+            border: 2px solid #ddd;
+        }
+
+        /* ==================== PARAMETERS ==================== */
+        .param-row {
+            margin-top: 18px;
+            display: flex;
+            gap: 16px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .param-row label {
+            font-size: 20px;  /* 🔥 bigger label text */
+            font-weight: 600;
+        }
+        .param-row input {
+            width: 90px;
+            padding: 8px;
+            font-size: 20px;  /* 🔥 bigger input text */
+            border-radius: 8px;
+            border: 2px solid #ccc;
+        }
+
+        .btn {
+            padding: 10px 26px;
+            font-size: 20px; /* 🔥 bigger button text */
+            border: none;
+            border-radius: 10px;
+            background: #007bff;
+            color: #fff;
+            font-weight: 700;
+            cursor: pointer;
+        }
+        .btn:hover { background: #0056b3; }
+
+        /* ==================== RESTORATION RESULTS ==================== */
+        .result-card {
+            width: 650px; /* bigger container */
+            background: #fff;
+            border-radius: 12px;
+            padding: 18px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+        }
+        .result-card img {
+            width: 100%;
+            transform: scale(2.4); /* 🔥 enlarged image scaling */
+            transform-origin: top left;
+            margin-bottom: 40px;
+        }
+        .result-title {
+            font-size: 22px; /* 🔥 bigger title under image */
+            font-weight: 700;
+        }
+
+        /* ==================== TM RESULTS ==================== */
+        .tm-card {
+            width: 350px; /* bigger card */
+            background: #fff;
+            padding: 12px;
+            border-radius: 12px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+        }
+        .tm-card img {
+            width: 100%;
+            border-radius: 10px;
+        }
+        .tm-caption {
+            font-size: 16px; /* 🔥 bigger caption */
+            margin-top: 6px;
+            color: #444;
+        }
+
+    </style>
+</head>
+<body>
+
+<h1>Module 2</h1>
+
+<div class="note">
+    Part 1: Hybrid Wiener–Lucy restoration.<br>
+    Part 2: Template Matching using matching_T.py.
+</div>
+
+{% if error %}
+<div class="error">{{ error }}</div>
+{% endif %}
+
+<!-- ==================== TABS ==================== -->
+<div class="tabs">
+    <a href="{{ url_for('index', tab='dataset') }}"
+       class="{% if active_tab == 'dataset' %}active{% endif %}">
+        Dataset
+    </a>
+
+    <a href="{{ url_for('index', tab='upload') }}"
+       class="{% if active_tab == 'upload' %}active{% endif %}">
+        Upload
+    </a>
+
+    <a href="{{ url_for('index', tab='template') }}"
+       class="{% if active_tab == 'template' %}active{% endif %}">
+        Template Matching
+    </a>
+</div>
+
+{% if active_tab in ['dataset','upload'] %}
+
+    <!-- THUMBNAILS -->
+    <div class="thumb-strip">
+        {% for f in files %}
+        {% set rel = 'dataset/' ~ f %}
+            <a href="{{ url_for('view', path=rel, tab=active_tab) }}">
+                <img src="{{ url_for('static', filename=rel) }}"
+                     class="thumb {% if image_path == rel %}selected{% endif %}">
+            </a>
+        {% endfor %}
+    </div>
+
+    <!-- SELECTED SECTION -->
+    <div class="selected-section">
+        <h2>Selected image</h2>
+
+        {% if image_path %}
+            <img src="{{ url_for('static', filename=image_path) }}" class="selected-img">
+        {% else %}
+            <div class="note">Select an image above.</div>
+        {% endif %}
+
+        {% if image_path %}
+        <form method="get" action="{{ url_for('restore') }}">
+            <input type="hidden" name="path" value="{{ image_path }}">
+            <input type="hidden" name="tab" value="{{ active_tab }}">
+
+            <div class="param-row">
+                <label>σ:</label>
+                <input type="number" step="0.5" name="sigma" 
+                       value="{{ params.sigma if params else 7 }}">
+
+                <label>K:</label>
+                <input type="number" step="0.0005" name="K" 
+                       value="{{ params.K if params else 0.002 }}">
+
+                <label>Iter:</label>
+                <input type="number" name="iterations" 
+                       value="{{ params.iterations if params else 8 }}">
+
+                <button class="btn">Run Hybrid Restoration</button>
+            </div>
+        </form>
+        {% endif %}
+
+        <!-- RESULTS -->
+        <h2>Results</h2>
+
+        {% if results %}
+        <div style="display:flex;flex-wrap:wrap;gap:26px;">
+            {% for r in results %}
+            <div class="result-card">
+                <img src="{{ url_for('static', filename=r.file) }}?v={{ r.v }}">
+                <div class="result-title">{{ r.title }}</div>
+                <div style="font-size:16px;color:#666;">
+                    <code>{{ r.file }}</code>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="note">Run Hybrid Restoration to see results.</div>
+        {% endif %}
+    </div>
+
+{% endif %}
+
+{% if active_tab == 'template' %}
+    <div class="selected-section">
+        <h2>Template Matching</h2>
+        <form method="post" action="{{ url_for('template_match') }}">
+            <button class="btn">Run Template Matching</button>
+        </form>
+
+        <br>
+
+        {% if tm_results %}
+        <div style="display:flex;flex-wrap:wrap;gap:26px;">
+            {% for p in tm_results %}
+            <div class="tm-card">
+                <img src="{{ url_for('static', filename=p) }}">
+                <div class="tm-caption"><code>{{ p }}</code></div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="note">No template matching results yet.</div>
+        {% endif %}
+    </div>
+{% endif %}
+
+</body>
+</html>
