@@ -4,34 +4,33 @@
     <meta charset="utf-8">
     <title>Module 2</title>
     <style>
-        /* ==================== GLOBAL ==================== */
         body {
             font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial;
             margin: 24px;
             background: #fafafa;
-            font-size: 18px; /* 🔥 bigger base font */
+            font-size: 18px; 
         }
 
         h1 { 
-            font-size: 32px; /* 🔥 bigger title */
+            font-size: 32px; 
             margin-bottom: 6px; 
         }
         h2 { 
-            font-size: 26px; /* 🔥 bigger section titles */ 
+            font-size: 26px; 
             margin-bottom: 10px;
         }
 
         .note {
             color: #555;
             margin-bottom: 16px;
-            font-size: 18px; /* 🔥 bigger description */
+            font-size: 18px; 
         }
 
         .error {
             background: #ffe6e6;
             color: #a00;
             padding: 12px 16px;
-            font-size: 18px; /* 🔥 larger error text */
+            font-size: 18px; 
             border-radius: 10px;
             margin-bottom: 20px;
         }
@@ -49,7 +48,7 @@
             margin-right: 8px;
             text-decoration: none;
             color: #333;
-            font-size: 20px; /* 🔥 bigger tab text */
+            font-size: 20px; 
             font-weight: 600;
         }
         .tabs a.active {
@@ -58,7 +57,6 @@
             color: #fff;
         }
 
-        /* ==================== THUMBNAILS ==================== */
         .thumb-strip {
             display: flex;
             overflow-x: auto;
@@ -80,10 +78,9 @@
             border-color: #007bff;
         }
 
-        /* ==================== SELECTED IMAGE ==================== */
         .selected-section {
             background: #fff;
-            padding: 24px; /* bigger padding */
+            padding: 24px; 
             border-radius: 14px;
             box-shadow: 0 2px 10px rgba(0,0,0,0.10);
             margin-bottom: 26px;
@@ -94,7 +91,6 @@
             border: 2px solid #ddd;
         }
 
-        /* ==================== PARAMETERS ==================== */
         .param-row {
             margin-top: 18px;
             display: flex;
@@ -126,7 +122,6 @@
         }
         .btn:hover { background: #0056b3; }
 
-        /* ==================== RESTORATION RESULTS ==================== */
         .result-card {
             width: 650px; /* bigger container */
             background: #fff;
@@ -145,7 +140,6 @@
             font-weight: 700;
         }
 
-        /* ==================== TM RESULTS ==================== */
         .tm-card {
             width: 350px; /* bigger card */
             background: #fff;
@@ -178,7 +172,6 @@
 <div class="error">{{ error }}</div>
 {% endif %}
 
-<!-- ==================== TABS ==================== -->
 <div class="tabs">
     <a href="{{ url_for('index', tab='dataset') }}"
        class="{% if active_tab == 'dataset' %}active{% endif %}">
@@ -198,7 +191,6 @@
 
 {% if active_tab in ['dataset','upload'] %}
 
-    <!-- THUMBNAILS -->
     <div class="thumb-strip">
         {% for f in files %}
         {% set rel = 'dataset/' ~ f %}
@@ -209,7 +201,6 @@
         {% endfor %}
     </div>
 
-    <!-- SELECTED SECTION -->
     <div class="selected-section">
         <h2>Selected image</h2>
 
@@ -242,7 +233,6 @@
         </form>
         {% endif %}
 
-        <!-- RESULTS -->
         <h2>Results</h2>
 
         {% if results %}
