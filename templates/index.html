@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Task 3: Automated Privacy Redaction System</title>
+    <style>
+        body { 
+            font-family: sans-serif; 
+            text-align: center; 
+            background-color: #dbe4f0; /* Light Navy Blue Tone */
+            padding: 20px; 
+        }
+        h1 { 
+            color: #1f2d44; /* Deep Navy for contrast */
+        }
+        p {
+            font-size: 1.05rem;
+            color: #24344f;
+            max-width: 700px;
+            margin: 10px auto;
+            line-height: 1.6;
+        }
+        .container { 
+            display: flex; 
+            justify-content: center; 
+            gap: 20px; 
+            flex-wrap: wrap; 
+            margin-top: 30px; 
+        }
+        .image-box {
+            background: white; 
+            padding: 15px; 
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.12);
+            width: 520px;
+        }
+        h3 {
+            color: #1f2d44;
+            margin-bottom: 10px;
+        }
+        img { 
+            max-width: 500px; 
+            width: 100%; 
+            height: auto; 
+            border-radius: 5px; 
+        }
+
+        /* Button Styling */
+        input[type="submit"] {
+            background-color: #b7322c; 
+            color: white; 
+            padding: 14px 32px;
+            border: none; 
+            border-radius: 6px; 
+            cursor: pointer; 
+            font-size: 17px; 
+            font-weight: 600;
+            transition: background 0.3s;
+        }
+        input[type="submit"]:hover { 
+            background-color: #9f2a26; 
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Automated Privacy Redaction System</h1>
+
+    <p>
+        This system performs automated detection and blurring of privacy-sensitive
+        elements within a scene. Select the option below to initiate the redaction process
+        and generate a privacy-preserving output image.
+    </p>
+
+    <form method="POST">
+        <input type="submit" value="Execute Redaction">
+    </form>
+
+    <div class="container">
+        {% if original %}
+        <div class="image-box">
+            <h3>Original Image</h3>
+            <img src="{{ original }}" alt="Original Scene">
+        </div>
+        {% endif %}
+
+        {% if processed %}
+        <div class="image-box">
+            <h3>Output</h3>
+            <img src="{{ processed }}" alt="Redacted Image">
+        </div>
+        {% endif %}
+    </div>
+
+</body>
+</html>
