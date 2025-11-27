@@ -6,7 +6,7 @@ The module covers classical template matching, image restoration, and a Flask-ba
 
 ---
 
-## 📌 Task 1 – Template Matching (OpenCV)
+## Task – Template Matching (OpenCV)
 
 ### **Overview**
 Task 1 performs object detection using classical **template matching**.
@@ -24,7 +24,7 @@ Task 1 performs object detection using classical **template matching**.
 
 ---
 
-## 📌 Task 2 – Image Restoration (Wiener + Sharpening)
+## Task 2 – Image Restoration (Wiener + Sharpening)
 
 ### **Overview**
 Task 2 applies digital image restoration to improve blurry or noisy images.
@@ -39,7 +39,7 @@ Task 2 applies digital image restoration to improve blurry or noisy images.
 
 ---
 
-## 📌 Task 3 – Privacy Redaction Web App (Flask)
+## Task 3 – Privacy Redaction Web App (Flask)
 
 ### **Overview**
 A full web-based pipeline to automatically detect and blur privacy-sensitive regions.
@@ -63,7 +63,7 @@ A full web-based pipeline to automatically detect and blur privacy-sensitive reg
 
 ---
 
-## 📁 Folder Structure
+## Folder Structure
 
 ```
 MODULE2/
@@ -80,7 +80,7 @@ MODULE2/
 
 ---
 
-## 🚀 How to Run
+## How to Run
 
 ### **1. Template Matching**
 ```bash
@@ -104,7 +104,7 @@ http://127.0.0.1:5000
 
 ---
 
-## 📝 Requirements
+## Requirements
 Install required packages:
 
 ```bash
