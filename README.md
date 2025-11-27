@@ -1,5 +1,5 @@
 
-# Module 2 – Template Matching & Privacy Redaction
+# Module 2 
 
 This README describes all tasks implemented in Module 2, based on your uploaded files (`app.py`, `task1.py`, `task2.py`, `index.html`).  
 The module covers classical template matching, image restoration, and a Flask-based privacy-redaction system.
