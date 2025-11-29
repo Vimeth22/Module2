@@ -68,28 +68,21 @@ if img is None:
     print(f"Error: {IMAGE_PATH} not found.")
     exit()
 
-# Make sure static/ exists for saving outputs
 os.makedirs(STATIC_DIR, exist_ok=True)
 
-# OpenCV loads in BGR; matplotlib expects RGB
 img_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
 
-# Step 1: Apply a known Gaussian blur (for illustration)
 blurred = cv2.GaussianBlur(img_rgb, (KERNEL_SIZE, KERNEL_SIZE), SIGMA)
 
-# Step 2: Recover each color channel independently
 restored_channels = []
 for c in range(3):
     restored_c = recover_channel(blurred[:, :, c], KERNEL_SIZE, SIGMA)
     restored_channels.append(restored_c)
 
-# Merge channels back to an RGB image
 restored = np.stack(restored_channels, axis=2)
 
-# Small global contrast / brightness tweak
 restored = cv2.convertScaleAbs(restored, alpha=1.2, beta=-10)
 
-# Save results to static/
 blurred_bgr  = cv2.cvtColor(blurred,  cv2.COLOR_RGB2BGR)
 restored_bgr = cv2.cvtColor(restored, cv2.COLOR_RGB2BGR)
 
@@ -99,7 +92,6 @@ cv2.imwrite(RESTORED_OUT, restored_bgr)
 print(f"Saved blurred image to  {BLURRED_OUT}")
 print(f"Saved restored image to {RESTORED_OUT}")
 
-# Optional: show a side-by-side comparison
 plt.figure(figsize=(15, 6))
 plt.subplot(1, 3, 1); plt.imshow(img_rgb);  plt.title("Original");              plt.axis('off')
 plt.subplot(1, 3, 2); plt.imshow(blurred);  plt.title("Blurred (Input)");       plt.axis('off')

@@ -52,23 +52,14 @@ def best_match_gray(gray_scene, t_gray):
 
 
 def detect_highlighter_bgr(scene_bgr):
-    """
-    Find the pink highlighter using BGR thresholds.
-    Returns (x, y, w, h) or None.
-    """
     H, W = scene_bgr.shape[:2]
     B = scene_bgr[:, :, 0].astype(np.uint8)
     G = scene_bgr[:, :, 1].astype(np.uint8)
     R = scene_bgr[:, :, 2].astype(np.uint8)
 
-    # Strong pink / magenta in this photo:
-    # - R very high
-    # - G relatively low
-    # - B fairly high as well
     mask = (R > 200) & (G < 120) & (B > 150)
     mask = mask.astype(np.uint8) * 255
 
-    # Clean mask (close small gaps, remove tiny noise)
     kernel = np.ones((7, 7), np.uint8)
     mask = cv2.morphologyEx(mask, cv2.MORPH_CLOSE, kernel)
     mask = cv2.morphologyEx(mask, cv2.MORPH_OPEN, kernel)
@@ -77,14 +68,12 @@ def detect_highlighter_bgr(scene_bgr):
     if not contours:
         return None
 
-    # Largest pink blob is the highlighter
     largest = max(contours, key=cv2.contourArea)
-    if cv2.contourArea(largest) < 300:  # too small = noise
+    if cv2.contourArea(largest) < 300: 
         return None
 
     x, y, w, h = cv2.boundingRect(largest)
 
-    # Optional: small padding so the box nicely covers the pen
     pad = 5
     x = max(0, x - pad)
     y = max(0, y - pad)
@@ -110,17 +99,15 @@ def run_detection():
     for tpath in templates:
         name = os.path.splitext(os.path.basename(tpath))[0]
 
-        # --- SPECIAL CASE: highlighter ---
         if name == "highlighter":
             box = detect_highlighter_bgr(scene)
             if box is None:
                 print("[NO MATCH] highlighter (color detection failed)")
                 continue
             x, y, w, h = box
-            score = 1.0  # dummy score for log
+            score = 1.0  
             print(f"[MATCH] highlighter (color): at ({x},{y}) size ({w},{h})")
         else:
-            # All other objects: grayscale template matching
             t_color = cv2.imread(tpath)
             if t_color is None:
                 continue
