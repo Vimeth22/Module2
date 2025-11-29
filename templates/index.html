@@ -1,96 +1,126 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Task 3: Automated Privacy Redaction System</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Redaction System Interface</title>
     <style>
+        /* Global Styles & Typography */
         body { 
-            font-family: sans-serif; 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
             text-align: center; 
-            background-color: #dbe4f0; /* Light Navy Blue Tone */
-            padding: 20px; 
-        }
-        h1 { 
-            color: #1f2d44; /* Deep Navy for contrast */
-        }
-        p {
-            font-size: 1.05rem;
-            color: #24344f;
-            max-width: 700px;
-            margin: 10px auto;
+            background-color: #f4f7fa; /* Light background for professionalism */
+            padding: 30px; 
+            color: #333;
             line-height: 1.6;
         }
-        .container { 
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Header and Introduction */
+        .header {
+            padding: 20px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+        h1 { 
+            color: #1a4d8c; /* Deep Corporate Blue */
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+        .description {
+            font-size: 1.1rem;
+            color: #555;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Execution Button */
+        .action-form {
+            margin: 40px 0;
+        }
+        .action-button {
+            background-color: #007bff; /* Primary Action Blue */
+            color: white; 
+            padding: 15px 40px;
+            border: none; 
+            border-radius: 8px; 
+            cursor: pointer; 
+            font-size: 1.1rem; 
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            transition: background-color 0.3s, transform 0.1s;
+            box-shadow: 0 4px 10px rgba(0, 123, 255, 0.3);
+        }
+        .action-button:hover { 
+            background-color: #0056b3; 
+            transform: translateY(-2px);
+        }
+        .action-button:active {
+            transform: translateY(0);
+        }
+
+        /* Image Display Section */
+        .image-results-grid { 
             display: flex; 
             justify-content: center; 
-            gap: 20px; 
+            gap: 30px; 
             flex-wrap: wrap; 
             margin-top: 30px; 
         }
-        .image-box {
+        .image-panel {
             background: white; 
-            padding: 15px; 
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.12);
-            width: 520px;
+            padding: 20px; 
+            border-radius: 12px;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.08); /* Subtle, professional shadow */
+            flex: 1; /* Allows panels to grow */
+            min-width: 300px;
+            max-width: 550px;
         }
         h3 {
-            color: #1f2d44;
-            margin-bottom: 10px;
+            color: #1a4d8c;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.4rem;
+            font-weight: 500;
         }
-        img { 
-            max-width: 500px; 
-            width: 100%; 
+        .image-preview { 
+            max-width: 100%; 
             height: auto; 
-            border-radius: 5px; 
-        }
-
-        /* Button Styling */
-        input[type="submit"] {
-            background-color: #b7322c; 
-            color: white; 
-            padding: 14px 32px;
-            border: none; 
-            border-radius: 6px; 
-            cursor: pointer; 
-            font-size: 17px; 
-            font-weight: 600;
-            transition: background 0.3s;
-        }
-        input[type="submit"]:hover { 
-            background-color: #9f2a26; 
+            border-radius: 8px; 
+            border: 1px solid #ddd;
         }
     </style>
 </head>
 
 <body>
-
-    <h1>Automated Privacy Redaction System</h1>
-
-    <p>
-        This system performs automated detection and blurring of privacy-sensitive
-        elements within a scene. Select the option below to initiate the redaction process
-        and generate a privacy-preserving output image.
-    </p>
-
-    <form method="POST">
-        <input type="submit" value="Execute Redaction">
-    </form>
-
     <div class="container">
-        {% if original %}
-        <div class="image-box">
-            <h3>Original Image</h3>
-            <img src="{{ original }}" alt="Original Scene">
-        </div>
-        {% endif %}
+        <header class="header">
+            <h1>Automated Privacy Redaction System</h1>
+        </header>
 
-        {% if processed %}
-        <div class="image-box">
-            <h3>Output</h3>
-            <img src="{{ processed }}" alt="Redacted Image">
-        </div>
-        {% endif %}
+        <form method="POST" class="action-form">
+            <input type="submit" value="Execute Redaction Process" class="action-button">
+        </form>
+
+        <section class="image-results-grid">
+            {% if original %}
+            <div class="image-panel">
+                <h3>Input (Original File)</h3>
+                <img src="{{ original }}" alt="Original Scene" class="image-preview">
+            </div>
+            {% endif %}
+
+            {% if processed %}
+            <div class="image-panel">
+                <h3>Output (Redacted File)</h3>
+                <img src="{{ processed }}" alt="Redacted Image" class="image-preview">
+            </div>
+            {% endif %}
+        </section>
     </div>
-
 </body>
 </html>
