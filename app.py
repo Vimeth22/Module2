@@ -17,9 +17,8 @@ UPLOAD_FOLDER = 'static'
 TEMPLATES_DIR = 'dataset'
 # The path to the main image scene you want to process
 SCENE_SOURCE = 'dataset/testScene.jpg'
-# FIX: Lowering the threshold to 0.40 ensures low-contrast and small items 
-# (like the black wallet, brown box, and pink marker) are detected.
-MATCH_THRESHOLD = 0.40 
+# FIX: Lowering the threshold to 0.30 to ensure the low-contrast pink marker (highlighter) is detected.
+MATCH_THRESHOLD = 0.30
 
 IGNORE_FILES = {
     'testScene.jpg', 
